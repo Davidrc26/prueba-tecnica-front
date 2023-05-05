@@ -1,0 +1,79 @@
+<div *ngIf="showModal" class="container modalPersonalizado ">
+    <div class="modal-content-p">
+        <span class="close" (click)="closeModal()"><i class="material-icons small right">cancel</i></span>
+        <h6 class="modal-title">Selecciona el campo por el que deseas filtrar</h6>
+
+        
+        
+        <div class="f-group">
+            <label for="field">Campo</label>
+            <select name="field" class="browser-default desplegable filter-modal" (change)="onFieldSelected($event)">
+                <option value="">seleccione</option>
+                <option value="rating">Rating</option>
+                <option value="duracion">Duracion</option>
+                <option value="episodios">Episodios</option>
+            </select>
+        </div>
+        <div class="f-group">
+            <label for="field">Valor</label>
+            <select name="value" class="browser-default desplegable" (change)="onValueSelected($event)">
+                <option value="">seleccione</option>
+                <option *ngFor="let r of valuesFilter">{{r.value}}</option>
+            </select>
+        </div>
+            
+
+
+    </div>
+    <div class="buttons">
+        <button class="btn green" (click)="filter()">Aceptar</button>
+        &nbsp;&nbsp;
+        <button class="btn red" (click)="closeModal()">Cancelar</button>
+    </div>
+</div>
+<div class="filtros">
+
+    <select class="browser-default desplegable" name="año" (change)="filterYear($event)">
+        <option value="">All years</option>
+        <option value="1996">1996</option>
+        <option value="1999">1999</option>
+        <option value="2000">2000</option>
+        <option value="2014">2014</option>
+    </select>
+    &nbsp;&nbsp;
+    <button class="addFilter" (click)="openModal()">Añadir Filtro<i class="material-icons tiny">add</i></button>
+
+
+</div>
+
+<p class="numRecords">Numero de registros: {{numRecords}}</p>
+
+
+<table class="responsive-table highlight tbl tablaPersonalizada">
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Año</th>
+            <th>Creador(es)</th>
+            <th>Rating</th>
+            <th>Genero(s)</th>
+            <th>Duracion</th>
+            <th>Episodios</th>
+            <th>Imagen</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let r of dataFiltered">
+            <td>{{r.title}}</td>
+            <td>{{r.year}}</td>
+            <td *ngIf="r.creator.length > 1">{{r.creator[0]}} y otros</td>
+            <td *ngIf="r.creator.length == 1">{{r.creator[0]}}</td>
+            <td>{{r.rating}}</td>
+            <td *ngIf="r.genre.length==1">{{r.genre[0]}}</td>
+            <td *ngIf="r.genre.length>1">{{r.genre[0]}} y otros</td>
+            <td>{{r.runtime_in_minutes}}</td>
+            <td>{{r.episodes}}</td>
+            <td><img src="{{r.image}}" width="100" height="100"></td>
+        </tr>
+    </tbody>
+</table>
